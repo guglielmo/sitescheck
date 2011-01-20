@@ -25,10 +25,10 @@ Contents and Recipients are the only models.
 Details
 =======
 
-The chosen hashing algorythm is sha512, which produces a digest string of 64 hexabytes.
+The chosen hashing algorythm is sha512, which produces a digest string of 64 hexabytes::
 
-    import hashlib
-    h = hashlib.sha512()
-    h.update(content)
-    print h.hexdigest()
+  import hashlib
+  h = hashlib.sha512()
+  h.update(content)
+  print h.hexdigest()
 
