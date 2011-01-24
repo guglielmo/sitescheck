@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from django.db import models
 import hashlib
 import re
@@ -16,7 +17,9 @@ class Content(models.Model):
     (STATUS_ERROR, 'error')
   )
   
-  title = models.CharField(max_length=250)
+  title = models.CharField(max_length=250, 
+                           verbose_name=_("the identifier of the url"), 
+                           help_text="use the sequence IT - Name, where: I-Institution [C|G], T-type[R|P|C], Name, i.e. CR - Lazio)")
   url = models.URLField(verify_exists=True)
   xpath = models.CharField(blank=True, max_length=250)
   regexp = models.CharField(blank=True, max_length=250)

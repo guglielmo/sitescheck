@@ -7,7 +7,8 @@ class ContentAdmin(admin.ModelAdmin):
   list_filter = ('verification_status', )
   fieldsets = (
     (None, { 
-      'fields': ('title', 'notes', 'url', 'xpath', 'regexp', 'hashed') 
+      'fields': ('title', 'notes', 'url', 'xpath', 'regexp', 'hashed'),
+      'classes': ['wide', 'extrapretty']
     }),
     ('Verification', {
       'fields': ('verified_at', 'verification_status', 'verification_error')
