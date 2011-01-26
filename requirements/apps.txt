@@ -1,5 +1,4 @@
 Django==1.2.4
-MySQL-python
 South
 django-extensions
 lxml
