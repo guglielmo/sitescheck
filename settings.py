@@ -1,6 +1,3 @@
-# Django settings for op_sitescheck project.
-import locale
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -36,7 +33,6 @@ TIME_ZONE = 'Europe/Rome'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'it-IT'
-locale.setlocale(locale.LC_ALL, 'it_IT')
 
 SITE_ID = 1
 
