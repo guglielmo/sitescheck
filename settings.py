@@ -2,16 +2,16 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('guglielmo', 'g.celata@gmail.com'),
+    ('guglielmo', 'guglielmo.celata@gmail.com'),
 )
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
+        'ENGINE': 'django.db.backends.sqlite3', 
         'NAME': 'sitescheck',
-        'USER': 'root',
+        'USER': '',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
