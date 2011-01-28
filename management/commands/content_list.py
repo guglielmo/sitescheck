@@ -6,4 +6,4 @@ class Command(NoArgsCommand):
   
   def handle_noargs(self, **options):
     for content in Content.objects.all():
-      print "%s - \"%s\"" % (content.id, content)
+      print "%s - \"%s\" (%s)" % (content.id, content, content.verification_status)

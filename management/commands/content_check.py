@@ -18,4 +18,4 @@ class Command(BaseCommand):
         raise CommandError('Unexpected error')
       else:
         hash_string = content.check_hash()
-        print "%s: %s \n%s\n" % (content.id, content, hash_string)
+        print "%s: %s (%s)\n%s\n" % (content.id, content, content.verification_status, hash_string)
