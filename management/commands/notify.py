@@ -17,10 +17,10 @@ class Command(NoArgsCommand):
   
   
   def handle_noargs(self, **options):   
-    msg_txt, msg_html = '', '<ul style="disc-style:none">'
+    msg_txt, msg_html = '', 'Questo l\'elenco dei siti cambiati: <br/><ul style="disc-style:none">'
     for content in Content.objects.filter(verification_status=Content.STATUS_CHANGED):
       msg_txt += "%s\n" % content.title
-      msg_html += "<li>(<a href=\"%s\">%s</a>)</li>" % (content.url, content.title)
+      msg_html += "<li><a href=\"%s\">%s</a></li>" % (content.url, content.title)
     msg_html += '</ul>'
   
     if msg_txt != '':
