@@ -6,10 +6,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+SETTINGS_DIR = os.path.abspath(os.path.dirname(__file__))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', 
-        'NAME': 'sitescheck',
+        'NAME': os.path.join(SETTINGS_DIR, 'sitescheck'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -78,6 +80,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'sitescheck.urls'
 
 TEMPLATE_DIRS = (
+  os.path.join(SETTINGS_DIR, 'templates'),
 )
 
 INSTALLED_APPS = (
