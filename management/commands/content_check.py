@@ -5,6 +5,13 @@ from sitescheck.models import Content
 class Command(BaseCommand):
   args = '<id> <id>'
   help = 'Check specified content and print the corresponding hash'
+  option_list = BaseCommand.option_list + (
+      make_option('--html',
+          action='store_true',
+          dest='showhtml',
+          default=False,
+          help='Show html code.'),
+      )
   
   def handle(self, *args, **options):
     # loop over ids passed as args
@@ -19,3 +26,5 @@ class Command(BaseCommand):
       else:
         hash_string = content.check_hash()
         print "%s: %s (%s)\n%s\n" % (content.id, content, content.verification_status, hash_string)
+        if  options['showhtml']:
+          print content.get_html()

@@ -32,8 +32,7 @@ class Content(models.Model):
   def __unicode__(self):
     return self.title
   
-
-  def check_hash(self):
+  def get_html(self):
     # compile regexp used to remove session info (when needed)
     p = re.compile(self.regexp)
 
@@ -43,9 +42,15 @@ class Content(models.Model):
 
     # extract html_element using content.xpath
     html_element = tree.xpath(self.xpath)[0]
-
+    
     # transform it into a string and remove unwanted parts
     html_string = p.sub('', etree.tostring(html_element))
+
+    return html_string
+
+
+  def check_hash(self):
+    html_string = self.get_html()
 
     # create a 512 bits hash out of the html string
     hash_algorythm = hashlib.sha512(html_string)
