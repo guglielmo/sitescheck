@@ -59,16 +59,17 @@ class Content(models.Model):
     return hash_string
 
 
-  def verify(self):
+  def verify(self, dryrun):
     hash_string = self.check_hash()
     if  hash_string != self.hashed:
       self.hashed = hash_string
       self.verification_status = self.STATUS_CHANGED
     else:
       self.verification_status = self.STATUS_NOT_CHANGED
-
     self.verified_at = datetime.datetime.now()
-    self.save()
+    if dryrun == False:
+      self.save()
+    return self.verification_status
         
 
 class Recipient(models.Model):
