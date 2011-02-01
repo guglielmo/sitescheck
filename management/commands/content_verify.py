@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from optparse import make_option
 from sitescheck.models import Content
 import datetime
+import sys
 
 class Command(BaseCommand):
   args = '<id> <id>'
@@ -37,10 +38,11 @@ class Command(BaseCommand):
       err_msg = ''
       try:
         verification_status = content.verify(options['dryrun'])
-      except IOError as detail:
-        err_msg = "Url non leggibile: %s" % (content.url)
-      except Exception as detail:
-        err_msg = "Errore sconosciuto (%s): %s" % (type(detail), detail)
+      except IOError:
+        err_msg = "Errore: Url non leggibile: %s" % (content.url)
+      except Exception:
+        (e_type, e_value, e_traceback) = sys.exc_info()
+        err_msg = "Errore sconosciuto (%s): %s" % (e_type, e_value)
       finally:
         if err_msg != '':
           if options['dryrun'] == False:
@@ -55,6 +57,7 @@ class Command(BaseCommand):
             print "hash: %s" % content.check_hash()
           if options['showhtml'] == True:
             print "%s" % content.get_html()
-          print "---\n"
+
+        print "---\n"
           
         
