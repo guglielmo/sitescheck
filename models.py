@@ -41,6 +41,8 @@ class Content(models.Model):
     tree = etree.parse(self.url, parser)
 
     # extract html_element using content.xpath
+    if (self.xpath == ''):
+      self.xpath = '/html'
     html_element = tree.xpath(self.xpath)[0]
     
     # transform it into a string and remove unwanted parts

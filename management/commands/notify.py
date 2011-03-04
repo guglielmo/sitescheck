@@ -44,4 +44,4 @@ class Command(NoArgsCommand):
       else:
         print "will not send a bit; it's a dry run!"
     else:
-      raise CommandError('No changes')        
+      print "No changes detected!"        
