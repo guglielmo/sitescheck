@@ -3,6 +3,7 @@ from django.db import models
 import hashlib
 import re
 import datetime
+from urllib2 import urlopen 
 from lxml import etree
 
 class Content(models.Model):
@@ -36,13 +37,14 @@ class Content(models.Model):
     # compile regexp used to remove session info (when needed)
     p = re.compile(self.regexp)
 
+    
     # parse content from content.url
+    # handle redirects with urlopen
+    conn = urlopen(self.url)
     parser = etree.HTMLParser()
-    tree = etree.parse(self.url, parser)
+    tree = etree.parse(conn.geturl(), parser)
 
     # extract html_element using content.xpath
-    if (self.xpath == ''):
-      self.xpath = '/html'
     html_element = tree.xpath(self.xpath)[0]
     
     # transform it into a string and remove unwanted parts
