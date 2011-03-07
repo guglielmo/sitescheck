@@ -3,7 +3,7 @@ from django.db import models
 import hashlib
 import re
 import datetime
-from urllib2 import urlopen 
+from urllib2 import Request, urlopen 
 from lxml import etree
 
 class Content(models.Model):
@@ -40,9 +40,16 @@ class Content(models.Model):
     
     # parse content from content.url
     # handle redirects with urlopen
-    conn = urlopen(self.url)
+    req_headers = { 
+      "Accept": "application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5", 
+      "Accept-Charset":  "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
+      "Accept-Encoding": "gzip,deflate,sdch",
+      "Accept-Language": "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4"
+    }
+    req = Request(self.url, headers=req_headers)
+    resp = urlopen(req)
     parser = etree.HTMLParser()
-    tree = etree.parse(conn.geturl(), parser)
+    tree = etree.fromstring(resp.read(), parser)
 
     # extract html_element using content.xpath
     html_element = tree.xpath(self.xpath)[0]
