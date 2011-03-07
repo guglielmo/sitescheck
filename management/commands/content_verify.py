@@ -24,12 +24,30 @@ class Command(BaseCommand):
         dest='showhtml',
         default=False,
         help='Show html code.'),
+    make_option('--offset',
+        action='store',
+        type='int',
+        dest='offset',
+        default=0,
+        help='Force offset <> 0'),
+    make_option('--limit',
+        action='store',
+        type='int',
+        dest='limit',
+        default=0,
+        help='Force offset <> 0'),
   )
       
   
   def handle(self, *args, **options):
+    offset = options['offset']
+    limit = options['limit']
+
     if len(args) == 0:
-      contents = Content.objects.all()
+      if (limit > 0):
+        contents = Content.objects.all()[offset:(offset+limit)]
+      else:
+        contents = Content.objects.all()[offset:]
     else:
       contents = Content.objects.filter(id__in=args)
     
@@ -50,7 +68,7 @@ class Command(BaseCommand):
             content.verification_error = err_msg
             content.verified_at = datetime.datetime.now()
             content.save()
-          print "%s: %s - %s" % (content.id, content, err_msg)
+          print "id: %s - %s" % (content.id,  err_msg)
         else:
           print "%s: %s (%s)" % (content.id, content, verification_status)
           if options['showhash'] == True:
