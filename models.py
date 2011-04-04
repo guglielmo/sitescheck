@@ -48,8 +48,16 @@ class Content(models.Model):
     }
     req = Request(self.url, headers=req_headers)
     resp = urlopen(req)
+    data = resp.read()
+    if  resp.headers.get('Content-Encoding') == 'gzip':
+      import StringIO
+      import gzip
+      zipped_stream = StringIO.StringIO(data)
+      gzipper = gzip.GzipFile(fileobj=zipped_stream)
+      data = gzipper.read()
+      
     parser = etree.HTMLParser()
-    tree = etree.fromstring(resp.read(), parser)
+    tree = etree.fromstring(data, parser)
 
     # extract html_element using content.xpath
     html_elements = tree.xpath(self.xpath)
