@@ -54,7 +54,7 @@ class Content(models.Model):
     # extract html_element using content.xpath
     html_elements = tree.xpath(self.xpath)
     if (len(html_elements)):
-      html_element = hteml_elements[0]
+      html_element = html_elements[0]
     else:
       raise NameError('xpath non trova niente: %s' % self.xpath)
       
