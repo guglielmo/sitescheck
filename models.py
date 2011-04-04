@@ -52,8 +52,12 @@ class Content(models.Model):
     tree = etree.fromstring(resp.read(), parser)
 
     # extract html_element using content.xpath
-    html_element = tree.xpath(self.xpath)[0]
-    
+    html_elements = tree.xpath(self.xpath)
+    if (len(html_elements)):
+      html_element = hteml_elements[0]
+    else:
+      raise NameError('xpath non trova niente')
+      
     # transform it into a string and remove unwanted parts
     html_string = p.sub('', etree.tostring(html_element))
 
