@@ -56,7 +56,7 @@ class Content(models.Model):
     if (len(html_elements)):
       html_element = hteml_elements[0]
     else:
-      raise NameError('xpath non trova niente')
+      raise NameError('xpath non trova niente: %s' % self.xpath)
       
     # transform it into a string and remove unwanted parts
     html_string = p.sub('', etree.tostring(html_element))
