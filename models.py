@@ -44,7 +44,8 @@ class Content(models.Model):
       "Accept": "application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5", 
       "Accept-Charset":  "ISO-8859-1,utf-8;q=0.7,*;q=0.3",
       "Accept-Encoding": "gzip,deflate,sdch",
-      "Accept-Language": "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4"
+      "Accept-Language": "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4",
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_7) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.71 Safari/534.24"
     }
     req = Request(self.url, headers=req_headers)
     resp = urlopen(req)
