@@ -1,19 +1,18 @@
 from django.contrib import admin
 from sitescheck.models import Content, Recipient
 
-
-
 class ContentAdmin(admin.ModelAdmin):    
-  list_display = ('_linked_title', 'verified_at', '_status_and_message')
+  list_display = ('_linked_title', 'todo', 'verified_at', '_status_and_message')
   search_fields = ('title', 'notes' )
-  list_filter = ('verification_status', )
+  radio_fields = {'todo': admin.HORIZONTAL}
+  list_filter = ('verification_status', 'todo' )
   fieldsets = (
     (None, { 
       'fields': ('title', 'notes', 'url', 'xpath', 'regexp', 'hashed'),
       'classes': ['wide', 'extrapretty']
     }),
     ('Verification', {
-      'fields': ('verified_at', 'verification_status', 'verification_error')
+      'fields': ('todo', 'verified_at', 'verification_status', 'verification_error')
     })
   )
   readonly_fields = ('hashed', 'verified_at', 'verification_status', 'verification_error')

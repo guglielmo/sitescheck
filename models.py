@@ -1,3 +1,4 @@
+# coding: utf-8
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 import hashlib
@@ -5,6 +6,7 @@ import re
 import datetime
 from urllib2 import Request, urlopen 
 from lxml import etree
+from model_utils import Choices
 
 class Content(models.Model):
   """a content on the web, identified by the URL and the XPATH expression"""
@@ -16,6 +18,10 @@ class Content(models.Model):
     (STATUS_CHANGED, 'changed'), 
     (STATUS_NOT_CHANGED, 'unchanged'),
     (STATUS_ERROR, 'error')
+  )
+  TODO = (
+    ('yes', 'Yes'),
+    ('no', 'No')
   )
   
   title = models.CharField(max_length=250, 
@@ -29,6 +35,7 @@ class Content(models.Model):
   verified_at = models.DateTimeField(blank=True, null=True)
   verification_status = models.IntegerField(choices=STATUS_CHOICES, default=STATUS_NOT_CHANGED)
   verification_error = models.CharField(blank=True, max_length=250)
+  todo = models.CharField(max_length=2, choices=TODO)
 
   def __unicode__(self):
     return self.title

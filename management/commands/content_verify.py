@@ -45,9 +45,9 @@ class Command(BaseCommand):
 
     if len(args) == 0:
       if (limit > 0):
-        contents = Content.objects.all()[offset:(offset+limit)]
+        contents = Content.objects.filter(todo='yes')[offset:(offset+limit)]
       else:
-        contents = Content.objects.all()[offset:]
+        contents = Content.objects.filter(todo='yes')[offset:]
     else:
       contents = Content.objects.filter(id__in=args)
     
