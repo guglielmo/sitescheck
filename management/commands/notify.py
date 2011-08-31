@@ -18,7 +18,7 @@ class Command(NoArgsCommand):
   
   def handle_noargs(self, **options):   
     msg_txt, msg_html = '', 'Questo l\'elenco dei siti cambiati: <br/><ul style="list-style-type:none">'
-    for content in Content.objects.filter(verification_status=Content.STATUS_CHANGED):
+    for content in Content.objects.filter(todo='yes', verification_status=Content.STATUS_CHANGED):
       msg_txt += "%s\n" % content.title
       msg_html += "<li><a href=\"%s\">%s</a></li>" % (content.url, content.title)
     msg_html += '</ul>'
