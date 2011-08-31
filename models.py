@@ -35,7 +35,7 @@ class Content(models.Model):
   verified_at = models.DateTimeField(blank=True, null=True)
   verification_status = models.IntegerField(choices=STATUS_CHOICES, default=STATUS_NOT_CHANGED)
   verification_error = models.CharField(blank=True, max_length=250)
-  todo = models.CharField(max_length=2, choices=TODO)
+  todo = models.CharField(max_length=3, choices=TODO)
 
   def __unicode__(self):
     return self.title

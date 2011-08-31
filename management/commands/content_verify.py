@@ -51,6 +51,9 @@ class Command(BaseCommand):
     else:
       contents = Content.objects.filter(id__in=args)
     
+    if (len(contents) == 0):
+      print "no content to check this time"
+      
     for content in contents:
       hashed = ''
       err_msg = ''
