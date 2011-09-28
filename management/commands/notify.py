@@ -23,7 +23,8 @@ class Command(NoArgsCommand):
       msg_html += "<li><a href=\"%s\">%s</a></li>" % (content.url, content.title)
     msg_html += '</ul>'
 
-    msg_txt, msg_html += "Errori:\n", 'Questo l\'elenco dei siti con errori: <br/><ul style="list-style-type:none">'
+    msg_txt += "Errori:\n"
+    msg_html += 'Questo l\'elenco dei siti con errori: <br/><ul style="list-style-type:none">'
     for content in Content.objects.filter(todo='yes', verification_status=Content.STATUS_ERROR):
       msg_txt += " - %s\n" % content.title
       msg_html += "<li><a href=\"%s\">%s</a></li>" % (content.url, content.title)
