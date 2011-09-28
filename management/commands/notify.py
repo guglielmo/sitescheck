@@ -17,9 +17,15 @@ class Command(NoArgsCommand):
   
   
   def handle_noargs(self, **options):   
-    msg_txt, msg_html = '', 'Questo l\'elenco dei siti cambiati: <br/><ul style="list-style-type:none">'
+    msg_txt, msg_html = "Cambiamenti:\n", 'Questo l\'elenco dei siti cambiati: <br/><ul style="list-style-type:none">'
     for content in Content.objects.filter(todo='yes', verification_status=Content.STATUS_CHANGED):
-      msg_txt += "%s\n" % content.title
+      msg_txt += " - %s\n" % content.title
+      msg_html += "<li><a href=\"%s\">%s</a></li>" % (content.url, content.title)
+    msg_html += '</ul>'
+
+    msg_txt, msg_html += "Errori\n":, 'Questo l\'elenco dei siti con errori: <br/><ul style="list-style-type:none">'
+    for content in Content.objects.filter(todo='yes', verification_status=Content.STATUS_ERROR):
+      msg_txt += " - %s\n" % content.title
       msg_html += "<li><a href=\"%s\">%s</a></li>" % (content.url, content.title)
     msg_html += '</ul>'
   
@@ -35,9 +41,9 @@ class Command(NoArgsCommand):
           msg = EmailMultiAlternatives(subject, msg_txt, settings.DEFAULT_FROM_EMAIL, recipients)
           msg.attach_alternative(msg_html, "text/html")
           msg.send()
-          content.verification_status = Content.STATUS_NOT_CHANGED
-          content.verification_error = ''
-          content.save()
+          # content.verification_status = Content.STATUS_NOT_CHANGED
+          # content.verification_error = ''
+          # content.save()
           print "ok"
         except:
           print "error sending email"
