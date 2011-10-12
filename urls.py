@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^', include(admin.site.urls)),
+    (r'^diff/(?P<content_id>\d+)$', 'sitescheck.views.diff'),  
 )
 
 # static media (not for production!)

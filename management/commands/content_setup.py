@@ -1,14 +1,12 @@
+from django.core.management.base import BaseCommand, CommandError
 from optparse import make_option
-import difflib
+from sitescheck.models import Content
 import datetime
 import sys
 
-from django.core.management.base import BaseCommand, CommandError
-from sitescheck.models import Content
-
 class Command(BaseCommand):
   args = '<id> <id>'
-  help = 'Verify specified content'
+  help = 'Setup content, getting live from specified websites'
 
   option_list = BaseCommand.option_list + (
     make_option('--dryrun',
@@ -16,16 +14,11 @@ class Command(BaseCommand):
         dest='dryrun',
         default=False,
         help='Execute a dry run: no db is written.'),
-    make_option('--meat',
+    make_option('--html',
         action='store_true',
-        dest='showmeat',
+        dest='showhtml',
         default=False,
-        help='Show extracted text'),
-    make_option('--diff',
-        action='store_true',
-        dest='showdiff',
-        default=False,
-        help='Show diff code.'),
+        help='Show html code.'),
     make_option('--offset',
         action='store',
         type='int',
@@ -54,12 +47,15 @@ class Command(BaseCommand):
       contents = Content.objects.filter(id__in=args)
     
     if (len(contents) == 0):
-      print "no content to check this time"
-     
+      print "no content to get this time"
+      
     for cnt, content in enumerate(contents):
       err_msg = ''
       try:
-        verification_status = content.verify(options['dryrun'])
+        content.meat = content.get_live_meat()
+        content.verification_status = Content.STATUS_NOT_CHANGED
+        content.verification_error = None
+        content.verified_at = None
       except IOError:
         err_msg = "Errore: Url non leggibile: %s" % (content.url)
       except Exception, e:
@@ -76,16 +72,11 @@ class Command(BaseCommand):
         else:
           print "%s/%s - %s is %s (id: %s)" % \
                 (cnt+1, len(contents), content, 
-                 verification_status, content.id,)
-          if options['showmeat'] == True:
-            print "Meaningful content: %s" % content.get_live_meat()
-          if options['showdiff'] == True:
-            live = content.get_live_meat().splitlines(1)
-            stored = content.meat.splitlines(1)
-            # diff = difflib.HtmlDiff().make_table(live, stored, context=True, numlines=2)
-            diff = difflib.ndiff(live, stored)
-            print "".join(diff)
+                 Content.STATUS_NOT_CHANGED, content.id,)
+          if options['showhtml'] == True:
+             print "Meaningful content: %s" % content.get_live_meat()
+          if options['dryrun'] == False:
+              content.save()
         
-    
   
 

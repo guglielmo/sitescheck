@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=ISO-8859-1" />
+    <title></title>
+    <style type="text/css">
+        table.diff {font-family:Courier; border:medium; font-size: 12px}
+        .diff_header {background-color:#e0e0e0}
+        td.diff_header {text-align:right}
+        .diff_next {background-color:#c0c0c0}
+        .diff_add {background-color:#aaffaa}
+        .diff_chg {background-color:#ffff77}
+        .diff_sub {background-color:#ffaaaa}
+    </style>
+</head>
+
+<body>
+    <h1>{{ content.title }} </h1>
+    <div>La colonna sinistra mostra il testo nel DB, quella destra il testo sul sito live.<br>
+      I colori indicano le variazioni del testo.</div>
+    <br/>
+    <div>
+    {{ diff|safe }}
+    <br/>
+    <table class="diff" summary="Legends">
+        <tr> <th colspan="2"> Legende </th> </tr>
+        <tr> <td> <table border="" summary="Colors">
+                      <tr><th> Colori </th> </tr>
+                      <tr><td class="diff_add">&nbsp;Aggiunte&nbsp;</td></tr>
+                      <tr><td class="diff_chg">Modifiche</td> </tr>
+                      <tr><td class="diff_sub">Rimozioni</td> </tr>
+                  </table></td>
+             <td> <table border="" summary="Links">
+                      <tr><th colspan="2"> Links </th> </tr>
+                      <tr><td>(f) prima modifica</td> </tr>
+                      <tr><td>(n) prossima modifica</td> </tr>
+                      <tr><td>(t) top</td> </tr>
+                  </table></td> </tr>
+    </table>
+    
+    </div>
+    
+</body>
+
+
+{% block title %}
+  
+{% endblock %}
+
+{% block content %}
+{% endblock %}
