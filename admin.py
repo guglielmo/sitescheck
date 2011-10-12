@@ -38,14 +38,26 @@ class ContentAdmin(admin.ModelAdmin):
   def update(self, request, queryset):
       for obj in queryset:
           obj.update()
-  update.short_description = "Update content from live sites"
+  update.short_description = "Aggiorna contenuto dai siti live"
   
   def verify(self, request, queryset):
       for obj in queryset:
           obj.verify()
-  verify.short_description = "Verify content against live sites"
+  verify.short_description = "Verifica differenze sui siti live"
   
-  actions = [update, verify]
+  def set_todo(self, request, queryset):
+      for obj in queryset:
+          obj.todo = 'yes'
+          obj.save()
+  set_todo.short_description = "Marca il sito come da fare"
+  
+  def unset_todo(self, request, queryset):
+      for obj in queryset:
+          obj.todo = 'no'
+          obj.save()
+  unset_todo.short_description = "Marca il sito come non da fare"
+  
+  actions = [update, verify, set_todo, unset_todo]
   
 admin.site.register(Content, ContentAdmin)
 admin.site.register(Recipient)
