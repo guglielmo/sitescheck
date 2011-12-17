@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 import re
 import datetime
+from os import sys
 
 from urllib2 import Request, urlopen 
 import html2text
@@ -91,7 +92,9 @@ class Content(models.Model):
     
     
     def verify(self, dryrun=False):
-        if  self.get_live_meat().replace(" ", "") != self.meat.replace(" ", ""):
+        if  self.get_live_meat().replace(" ", "").strip() != self.meat.replace(" ", "").strip():
+            print >> sys.stderr, self.get_live_meat().replace(" ", "")
+            print >> sys.stderr, self.meat.replace(" ", "")
             self.verification_status = self.STATUS_CHANGED
         else:
             self.verification_status = self.STATUS_NOT_CHANGED
