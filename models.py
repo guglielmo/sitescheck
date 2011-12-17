@@ -41,7 +41,6 @@ class Content(models.Model):
     verification_error = models.CharField(blank=True, max_length=250)
     todo = models.CharField(max_length=3, choices=TODO)
     
-    
     def __unicode__(self):
         return self.title
     
@@ -92,7 +91,7 @@ class Content(models.Model):
     
     
     def verify(self, dryrun=False):
-        if  self.get_live_meat() != self.meat:
+        if  self.get_live_meat().replace(" ", "") != self.meat.replace(" ", ""):
             self.verification_status = self.STATUS_CHANGED
         else:
             self.verification_status = self.STATUS_NOT_CHANGED
