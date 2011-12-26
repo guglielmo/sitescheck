@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 import re
 import datetime
+from os import sys
 
 from urllib2 import Request, urlopen 
 import html2text

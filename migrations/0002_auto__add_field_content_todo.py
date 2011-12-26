@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding field 'Content.todo'
-        db.add_column('sitescheck_content', 'todo', self.gf('django.db.models.fields.CharField')(default='si', max_length=2), keep_default=False)
+        db.add_column('sitescheck_content', 'todo', self.gf('django.db.models.fields.CharField')(default='no', max_length=2), keep_default=False)
 
 
     def backwards(self, orm):
