@@ -92,8 +92,8 @@ class Content(models.Model):
     
     
     def verify(self, dryrun=False):
-        if  (self.get_live_meat().replace(" ", "").replace("\n", "").replace("\t", "") != 
-             self.meat.replace(" ", "").replace("\n", "").replace("\t", "")):
+        if  (self.get_live_meat().replace(" ", "").replace("\n", "").replace("\t", "").replace(unichr(160), "") != 
+             self.meat.replace(" ", "").replace("\n", "").replace("\t", "").replace(unichr(160), "")):
             self.verification_status = self.STATUS_CHANGED
         else:
             self.verification_status = self.STATUS_NOT_CHANGED
