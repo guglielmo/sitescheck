@@ -3,7 +3,7 @@ from sitescheck.models import Content, Recipient
 
 class ContentAdmin(admin.ModelAdmin):    
   list_display = ('_linked_title', 'todo', 'verified_at', '_status_and_message')
-  search_fields = ('^title', 'notes' )
+  search_fields = ('title', 'notes' )
   radio_fields = {'todo': admin.HORIZONTAL}
   list_filter = ('verification_status', 'todo' )
   fieldsets = (
